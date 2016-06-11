@@ -1,20 +1,21 @@
-# react-cookie
-Load, save and remove cookies within your React application
+# universal-cookie (Fork of [react-cookie](https://github.com/eXon/react-cookie))
+Load, save and remove cookies within your React application.
 
-## Isomorphic cookies!
-You can also plug it directly with a Node.js request by adding just before the renderToString: `var unplug = reactCookie.plugToRequest(req, res);`<br />
-*(require the cookieParser middleware)*
-
-To ensure long running async operations do not attempt to alter cookies after the request has been sent, call the `unplug` function that is returned in a finally block in your router.
-
-If you are within a non-browser or Node.js environment, you can use `reactCookie.setRawCookie(req.headers.cookie)`
+**Thanks to [eXon](https://github.com/eXon) for laying the groundwork. I forked this project because I have a different preferences for coding style (I prefer ES6 / mocha to ES5 / jasmine) and am using cookies heavily in a few applications.**
 
 
+## Universal Cookies
 
-## Download
-NPM: `npm install react-cookie`<br />
-Bower: `bower install react-cookie`<br />
-CDN: `https://cdnjs.cloudflare.com/ajax/libs/react-cookie/0.4.3/react-cookie.min.js`
+`universal-cookie` can be used from the client and server sides. From server code, you can use `const dispose = cookie.use(req, res)` to have cookie logic operate on an in-transit connections response cookie headers. *(require the cookieParser middleware)*
+
+To ensure long running async operations do not attempt to write to cookies after the request has been sent, you may call the `dispose` function that is returned prior to returning the response from your connect-style middleware.
+
+You can also set the raw cookie directly via `cookie.setRawCookie(req.headers.cookie)`
+
+
+## Install
+
+`npm install universal-cookie`
 
 # Examples
 
@@ -44,12 +45,6 @@ export default class MyApp extends Component {
   }
 }
 ```
-
-## Without CommonJS
-You can use react-cookie with anything by using the global variable `reactCookie`.
-
-*Note that `window` need to exists to use `reactCookie`.*
-
 ## Usage
 
 ### `reactCookie.load(name, [doNotParse])`
